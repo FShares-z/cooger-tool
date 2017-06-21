@@ -1,0 +1,38 @@
+html{
+    font-size: calc(100vw / 96);
+    font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+}
+.browserContent{
+    height: 54rem;
+}
+.loginContent{
+    height: 80vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.loginContent table{
+    width: 100%;
+    border-collapse:collapse;
+}
+.loginContent table td{
+    border: 1px solid #070707;
+    padding: 0;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+.flex-column input[type=text]{
+    width: 50rem;
+}
+.listid{
+    width: 15rem !important;
+}
