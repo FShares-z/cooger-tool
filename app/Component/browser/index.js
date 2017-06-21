@@ -5,6 +5,8 @@ import React from "react";
 const fs = window.require('fs');
 const path = window.require('path');
 let ipc = window.require('electron').ipcRenderer;
+
+
 const excel=window.require('node-xlsx');
 
 class Browser extends React.Component{
