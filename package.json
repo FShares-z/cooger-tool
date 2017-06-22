@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "watch": "watchify app/App.js -t babelify -o public/js/bundle.js --debug --verbose",
-    "packager": "electron-packager ./ testdemo --platform=all --arch=all --icon=favicon.ico --out z/App --asar --app-version=2.0.1 --ignore=\"(dist|excel|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\""
+    "packager": "electron-packager ./ testdemo --platform=all --arch=all --icon=favicon.ico --out z/App --asar --app-version=1.0.0 --ignore=\"(dist|excel|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\"",
+    "pg": "electron-packager ./ testdemo --all --out ./OutApp --version 1.4.0 --ignore=\"(dist|excel|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\" --overwrite --"
   },
   "keywords": [
     "niu",

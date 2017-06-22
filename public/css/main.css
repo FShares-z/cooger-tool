@@ -36,3 +36,6 @@ html{
 .listid{
     width: 15rem !important;
 }
+.red{
+    border:2px solid #ff0000;
+}

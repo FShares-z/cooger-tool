@@ -84,6 +84,7 @@ class Browser extends React.Component{
         let dom;
         if(e.target.nodeName=='TD'){
             dom=e.target.parentNode;
+            dom.className='red';
             webview.executeJavaScript(this._getHandleCode(dom.childNodes[0].innerText,dom.childNodes[1].innerText));
         }
     }
@@ -126,7 +127,7 @@ class Browser extends React.Component{
                                             return <tr key={k}>
                                                 <td>{self.state.list[k][1]}</td>
                                                 <td>{self.state.list[k][2]?self.state.list[k][2]:self.state.list[0][2].split('：')[1]}</td>
-                                                <td><input type="text" className="listid" onChange={self._changeListNum.bind(self,k)} /></td>
+                                                <td><input type="text" className="listid" value={self.state.list[k][3]?self.state.list[k][3]:''} onChange={self._changeListNum.bind(self,k)} /></td>
                                             </tr>;
 
                                     })
