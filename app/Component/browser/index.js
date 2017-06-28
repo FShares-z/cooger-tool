@@ -30,7 +30,7 @@ class Browser extends React.Component{
         this.resetIp();
     }
     resetIp(){
-        fetch('http://w.cc/api/cooger/getip', {
+        fetch('http://www.3jiaoxing.com/api/cooger/getip', {
             method: 'GET',
             mode: "cors",
             headers: {
