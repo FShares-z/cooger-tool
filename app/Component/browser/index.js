@@ -91,8 +91,8 @@ class Browser extends React.Component{
     _clickSearch(e){
         this.refs['browserContent'].src=this.refs['search'].value;
     }
-    _changeListNum(key,e){
-        this.state.list[key][3]=e.target.value;
+    _changeListNum(key,num,e){
+        this.state.list[key][num]=e.target.value;
         this.forceUpdate();
         console.log(this.state);
     }
@@ -118,6 +118,7 @@ class Browser extends React.Component{
                                     <td>帐号</td>
                                     <td>密码</td>
                                     <td>订单号</td>
+                                    <td>手机号</td>
                                 </tr>
                                 </thead>
                                 <tbody ref="list" onClick={this._clickHandle.bind(this)}>
@@ -127,7 +128,8 @@ class Browser extends React.Component{
                                             return <tr key={k}>
                                                 <td>{self.state.list[k][1]}</td>
                                                 <td>{self.state.list[k][2]?self.state.list[k][2]:self.state.list[0][2].split('：')[1]}</td>
-                                                <td><input type="text" className="listid" value={self.state.list[k][3]?self.state.list[k][3]:''} onChange={self._changeListNum.bind(self,k)} /></td>
+                                                <td><input type="text" className="listid" value={self.state.list[k][3]?self.state.list[k][3]:''} onChange={self._changeListNum.bind(self,k,3)} /></td>
+                                                <td><input type="text" className="listid" value={self.state.list[k][4]?self.state.list[k][4]:''} onChange={self._changeListNum.bind(self,k,4)} /></td>
                                             </tr>;
 
                                     })
