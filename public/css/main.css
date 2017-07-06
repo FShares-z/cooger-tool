@@ -13,6 +13,9 @@ html{
     height: 80vh;
     overflow: hidden;
     overflow-y: scroll;
+
+    width:500px;
+    font-size:10px;
 }
 .loginContent table{
     width: 100%;
