@@ -8,8 +8,11 @@ const path = require('path');
 let fs = require('fs');
 let isDevelopment = true;
 const ipc = require('electron').ipcMain;
+const http = require('http');
 
 var mainWnd = null;
+
+let iplist=[];
 
 function createMainWnd() {
     mainWnd = new BrowserWindow({
@@ -24,17 +27,44 @@ function createMainWnd() {
 
 
     mainWnd.loadURL(`file://${__dirname}/index.html`);
-    ipc.on('getIp',function (e,data) {
-        console.log('getip',data);
-        fs.writeFile(path.join(__dirname, "Proxy.pac"), 'function FindProxyForURL(url,host){if(shExpMatch(url,"*jd*")) return "PROXY '+data+'";if(shExpMatch(url,"*chinaz*")) return "PROXY '+data+'"; if(shExpMatch(url,"*baidu*")) return "PROXY '+data+'";return"DIRECT"}', function (err) {
+
+    getIp();
+
+    ipc.on('setIp',function (e) {
+        let retIp='';
+        if(isUse()){
+            getIp();
+        }
+        for(let i=0;i<iplist.length;i++){
+            if(!iplist[i].isUse){
+                retIp=iplist[i].ip+':'+iplist[i].port;
+                iplist[i].isUse=true;
+                break;
+            }
+        }
+
+        fs.writeFile(path.join(__dirname, "Proxy.pac"), 'function FindProxyForURL(url,host){if(shExpMatch(url,"*jd*")) return "PROXY '+retIp+'";if(shExpMatch(url,"*chinaz*")) return "PROXY '+retIp+'"; if(shExpMatch(url,"*baidu*")) return "PROXY '+retIp+'";return"DIRECT"}', function (err) {
             if (!err){
                 console.log("写入成功！")
+                console.log(iplist)
                 mainWnd.webContents.session.setProxy({pacScript:'file://' + __dirname + '/proxy.pac'}, function () {return true;});
             }else{
                 console.log("写入失败！",err)
             }
-
         })
+        function isUse() {
+            let num=0;
+            for(let i=0;i<iplist.length;i++){
+                if(iplist[i].isUse){
+                    num+=1;
+                }
+            }
+            if(num==20){
+                console.log('ip池已消耗完');
+                return true;//ip池已消耗完
+            }
+            return false;
+        }
     })
 
     // mainWnd.webContents.session.setProxy({pacScript:'file://' + __dirname + '/proxy.pac'}, function () {return true;});
@@ -43,6 +73,33 @@ function createMainWnd() {
     mainWnd.on('closed', () => {
         mainWnd = null;
 });
+}
+
+function getIp() {
+    http.get("http://www.3jiaoxing.com/api/cooger/getip", function(res) {
+        var size = 0;
+        var chunks = [];
+        res.on('data', function(chunk){
+            size += chunk.length;
+            chunks.push(chunk);
+        });
+        res.on('end', function(){
+            let data = JSON.parse(Buffer.concat(chunks, size).toString());
+            if(data.code==0){
+                data=JSON.parse(data.data);
+                if(data.ERRORCODE==0){
+                    iplist=data.RESULT;
+                    console.log(iplist);
+                }else if(data.ERRORCODE==10032){
+                    mainWnd.webContents.send('errMsg','今日提取已达上限');
+                }else{
+                    mainWnd.webContents.send('errMsg','请求频繁，请5秒后再试！');
+                }
+            }
+        });
+    }).on('error', function(e) {
+        console.log("Got error: " + e.message);
+    });
 }
 
 

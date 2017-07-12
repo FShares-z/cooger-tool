@@ -1,1 +1,1 @@
-function FindProxyForURL(url,host){if(shExpMatch(url,"*jd*")) return "PROXY ERROR(-13): 订单已过期";if(shExpMatch(url,"*chinaz*")) return "PROXY ERROR(-13): 订单已过期"; if(shExpMatch(url,"*baidu*")) return "PROXY ERROR(-13): 订单已过期";return"DIRECT"}
+function FindProxyForURL(url,host){if(shExpMatch(url,"*jd*")) return "PROXY 115.217.255.62:41044";if(shExpMatch(url,"*chinaz*")) return "PROXY 115.217.255.62:41044"; if(shExpMatch(url,"*baidu*")) return "PROXY 115.217.255.62:41044";return"DIRECT"}

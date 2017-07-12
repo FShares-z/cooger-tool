@@ -13,14 +13,24 @@ html{
     height: 80vh;
     overflow: hidden;
     overflow-y: scroll;
+    width: 30rem;
 }
-.loginContent table{
+.loginContent table tr{
     width: 100%;
     border-collapse:collapse;
 }
 .loginContent table td{
     border: 1px solid #070707;
     padding: 0;
+    white-space: nowrap;
+}
+
+.loginContent .item{
+    padding: 1rem  0.5rem;
+}
+.loginContent .item.pwd{
+    width: 10px;
+    overflow: hidden;
 }
 .flex-row{
     display: flex;
@@ -34,8 +44,11 @@ html{
     width: 50rem;
 }
 .listid{
-    width: 15rem !important;
+    width: 8rem !important;
 }
 .red{
     border:2px solid #ff0000;
+}
+.loginContent .thread{
+    padding:0 2rem;
 }
