@@ -10,6 +10,7 @@ let isDevelopment = true;
 const ipc = require('electron').ipcMain;
 const http = require('http');
 
+
 var mainWnd = null;
 
 let iplist=[];
@@ -26,9 +27,26 @@ function createMainWnd() {
     session.defaultSession.allowNTLMCredentialsForDomains('*')//to access internal sites
 
 
+
     mainWnd.loadURL(`file://${__dirname}/index.html`);
 
     getIp();
+
+    let ses= mainWnd.webContents.session;
+    ses.disableNetworkEmulation()
+    ipc.on('clear-cookie',function () {
+        session.defaultSession.cookies.get({}, (error, cookies) => {
+            ses.clearStorageData([{},function (error,success) {
+
+            }])
+        })
+        let cookieNull = [];
+        let cookieNullString = JSON.stringify(cookieNull);
+        fs.writeFile("cookie.txt",cookieNullString,function (err) {
+            if (err) throw err ;
+            // console.log("保存成功");
+        });
+    })
 
     ipc.on('setIp',function (e) {
         let retIp='';
@@ -43,7 +61,7 @@ function createMainWnd() {
             }
         }
 
-        fs.writeFile(path.join(__dirname, "Proxy.pac"), 'function FindProxyForURL(url,host){if(shExpMatch(url,"*jd*")) return "PROXY '+retIp+'";if(shExpMatch(url,"*chinaz*")) return "PROXY '+retIp+'"; if(shExpMatch(url,"*baidu*")) return "PROXY '+retIp+'";return"DIRECT"}', function (err) {
+        fs.writeFile(path.join(__dirname, "Proxy.pac"), 'function FindProxyForURL(url,host){ return "PROXY '+retIp+'";return"PROXY"}', function (err) {
             if (!err){
                 console.log("写入成功！")
                 console.log(iplist)

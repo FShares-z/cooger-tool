@@ -30,6 +30,7 @@ class Browser extends React.Component{
         this.resetIp();
     }
     resetIp(){
+        ipc.send("clear-cookie");
         ipc.send("setIp");
     }
     getLocalIp(){

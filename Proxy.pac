@@ -1,2 +1,1 @@
-
-function FindProxyForURL(url,host){if(shExpMatch(url,"*jd*")) return "PROXY 123.206.111.119:28368";if(shExpMatch(url,"*chinaz*")) return "PROXY 123.206.111.119:28368"; if(shExpMatch(url,"*baidu*")) return "PROXY 123.206.111.119:28368";return"DIRECT"}
+function FindProxyForURL(url,host){ return "PROXY 125.109.198.186:44947";return"PROXY"}
